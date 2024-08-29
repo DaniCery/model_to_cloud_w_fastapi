@@ -4,6 +4,31 @@ In this project, I develop a classification model on publicly available Census B
 
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
+
+# Project tree
+
+├── main.py
+├── sanitycheck.py
+├── setup.py
+├── model
+├── data
+│   ├── census.csv
+│   ├── clean_data.csv
+│   └── EDA.ipynb
+├── starter
+│   ├── __init__.py
+│   ├── train_model.py
+│   ├── test_model.py
+│   └── ml
+│       ├── __init__.py
+│       ├── model.py
+│       └── data.py
+├── tests
+│   ├── test_api.py
+│   └── test_model.py
+├── model_card_template.md
+├── README.md
+
 # Environment Set up
 * Download and install conda if you don’t have it already.
     * Use the supplied requirements file to create a new environment, or
