@@ -89,6 +89,7 @@ def model_pipeline():
         'recall': recall,
         'fbeta': fbeta,
     }
+
     with open(model_dir / 'metrics.json', 'w') as f:
         json.dump(metrics, f)
 

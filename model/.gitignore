@@ -1,0 +1,8 @@
+/encoder.pkl
+/lb.pkl
+/model.pkl
+
+!/model/*.dvc
+
+!/model/sliced_data_measures.json
+!/model/metrics.json
