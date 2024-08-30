@@ -1,7 +1,7 @@
 # Put the code for your API here.
 from fastapi import FastAPI, HTTPException
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, validator
 from enum import Enum
 import pickle
 import os
@@ -56,7 +56,7 @@ class Data(BaseModel):
     hours_per_week: int = Field(alias='hours-per-week', example=40)
     native_country: str = Field(alias='native-country',example='United-States')
 
-    @field_validator('sex')
+    @validator('sex')
     def sex_must_be_male_or_female(cls, v):
         if v not in ("Male", "Female"):
             raise ValueError('Sex must be Male or Female.')

@@ -5,7 +5,7 @@ pytest
 requests
 xgboost
 fastapi==0.63.0
-pydantic==2.8.2
+pydantic==1.10.18
 uvicorn
 gunicorn
 dvc
