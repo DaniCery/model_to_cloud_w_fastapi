@@ -15,14 +15,14 @@ client = TestClient(app)
 def test_root():
     r = client.get("/")
     assert r.status_code == 200
-    assert r.json() == "Welcome!"
+    assert r.json() == "Welcome"
 
 
 ####### POST ###########
 
 def test_predict_invalid():
     data = {}
-    response = client.post("/predict", json=json.dumps(data))
+    response = client.post("/predict/", json=json.dumps(data))
     assert response.status_code == 422
 
 def test_predict_positive():
@@ -41,7 +41,7 @@ def test_predict_positive():
             "hours_per_week": 50,
             "native_country": "United-States"
             }
-    response = client.post("/predict", data=json.dumps(data))
+    response = client.post("/predict/", data=json.dumps(data))
     assert response.status_code == 200
     assert response.json() == {"pred": 1}
 
@@ -62,6 +62,6 @@ def test_predict_negative():
             "hours_per_week": 40,
             "native_country": "Cuba"
             }
-    response = client.post("/predict", data=json.dumps(data))
+    response = client.post("/predict/", data=json.dumps(data))
     assert response.status_code == 200
     assert response.json() == {"pred": 0}
