@@ -2,5 +2,6 @@
     remote = storage
 ['remote "myremote"']
     url = gdrive://1-tI8k_eN07vXhjxreWcg2YPtWRlqfX4S
+    gdrive_use_service_account = true
 ['remote "storage"']
     url = gdrive://1-tI8k_eN07vXhjxreWcg2YPtWRlqfX4S
