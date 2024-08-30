@@ -33,15 +33,25 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    # Pull DVC
+    # Install DVC
     - name: Install dvc-gdrive
       run: |
         pip install 'dvc[gdrive]'
-    - name: Pull DVC
+
+    # Write Google Drive service account credentials to file
+    - name: Write GDrive Credentials
       run: |
-        dvc pull
-        env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        echo "${{ secrets.GDRIVE_CREDENTIALS_DATA }}" > gdrive-credentials.json
+      
+    # Configure DVC to use Google Drive with the service account
+    - name: Configure DVC for Google Drive
+      run: |
+        dvc remote modify myremote gdrive_use_service_account true
+        dvc remote modify myremote gdrive_service_account_json_path gdrive-credentials.json
+
+    # Pull DVC data
+    - name: Pull DVC
+      run: dvc pull
 
     # Lint with flake8    
     - name: Lint with flake8
