@@ -51,7 +51,8 @@ jobs:
 
     # Pull DVC data
     - name: Pull DVC
-      run: dvc pull
+      run: |
+        dvc pull -r myremote
 
     # Lint with flake8    
     - name: Lint with flake8
