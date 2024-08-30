@@ -22,7 +22,7 @@ def test_root():
 
 def test_predict_invalid():
     data = {}
-    response = client.post("/predict/", json=json.dumps(data))
+    response = client.post("/predict/", json=data)
     assert response.status_code == 422
 
 def test_predict_positive():
@@ -30,20 +30,20 @@ def test_predict_positive():
             "workclass": "Self-emp-inc",
             "fnlgt": 194924,
             "education": "HS-grad",
-            "education_num": 10,
-            "marital_status": "Never-married",
+            "education-num": 10,
+            "marital-status": "Never-married",
             "occupation": "Exec-managerial",
             "relationship": "Wife",
             "race": "White",
             "sex": "Female",
-            "capital_gain": 39222,
-            "capital_loss": 0,
-            "hours_per_week": 50,
-            "native_country": "United-States"
+            "capital-gain": 39222,
+            "capital-loss": 0,
+            "hours-per-week": 50,
+            "native-country": "United-States"
             }
-    response = client.post("/predict/", data=json.dumps(data))
+    response = client.post("/predict/", json=data)
     assert response.status_code == 200
-    assert response.json() == {"pred": 1}
+    assert response.json()["pred"][0] == '>50K'
 
 
 def test_predict_negative():
@@ -51,17 +51,17 @@ def test_predict_negative():
             "workclass": "State-gov",
             "fnlgt": 67416,
             "education": "11th",
-            "education_num": 13,
-            "marital_status": "Never-married",
+            "education-num": 13,
+            "marital-status": "Never-married",
             "occupation": "Adm-clerical",
             "relationship": "Not-in-family",
             "race": "White",
             "sex": "Female",
-            "capital_gain": 1174,
-            "capital_loss": 2310,
-            "hours_per_week": 40,
-            "native_country": "Cuba"
+            "capital-gain": 1174,
+            "capital-loss": 2310,
+            "hours-per-week": 40,
+            "native-country": "Cuba"
             }
-    response = client.post("/predict/", data=json.dumps(data))
+    response = client.post("/predict/", json=data)
     assert response.status_code == 200
-    assert response.json() == {"pred": 0}
+    assert response.json()["pred"][0] ==  '<=50K'
