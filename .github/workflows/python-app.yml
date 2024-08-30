@@ -34,6 +34,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     # Pull DVC
+    - name: Install dvc-gdrive
+      run: |
+        pip install 'dvc[gdrive]'
     - name: Pull DVC
       run: |
         dvc pull
