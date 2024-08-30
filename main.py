@@ -1,12 +1,12 @@
 # Put the code for your API here.
-from typing import Union, List
 from fastapi import FastAPI, HTTPException
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from enum import Enum
 import pickle
 import os
 import uvicorn
+import pandas as pd
 from starter.ml.data import process_data
 from starter.ml.model import inference
 from starter.train_model import cat_features
@@ -51,12 +51,12 @@ class Data(BaseModel):
     relationship: str = Field(example='Not-in-family')
     race: str = Field(example='White')
     sex: str = Field(example='Female')
-    capital_gain: int = Field(gt=0, alias='capital-gain', example=2174)
-    capital_loss: int = Field(gt=0, alias='capital-loss', example=0)
+    capital_gain: int = Field(ge=0, alias='capital-gain', example=2174)
+    capital_loss: int = Field(ge=0, alias='capital-loss', example=0)
     hours_per_week: int = Field(alias='hours-per-week', example=40)
-    native_country: str = Field(example='United-States')
+    native_country: str = Field(alias='native-country',example='United-States')
 
-    @validator('sex')
+    @field_validator('sex')
     def sex_must_be_male_or_female(cls, v):
         if v not in ("Male", "Female"):
             raise ValueError('Sex must be Male or Female.')
@@ -76,12 +76,20 @@ async def predict(data: Data):
     if data.hours_per_week > 168:
         raise HTTPException(status_code=400, detail="hours_per_week needs to be lower than 168.")
     
-    X, _, _, _ = process_data(X, categorical_features=cat_features, 
+    # Convert data to a DataFrame
+    data = pd.DataFrame.from_records([data.model_dump()])
+    
+    # Manage hypens
+    data.columns = [col.replace('_', '-') for col in data.columns]
+
+    X, _, _, _ = process_data(data, categorical_features=cat_features, 
                     label=None, training=False, 
                     encoder=encoder, lb=lb)
     pred = inference(model, X)
 
-    return {"message": "Predictions", "data": pred}
+    out = ['<=50K' if p == 0 else '>50K' for p in pred]
+
+    return {"message": "Predictions", "pred": out}
 
 
 if __name__ == "__main__":
