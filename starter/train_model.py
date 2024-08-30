@@ -94,8 +94,9 @@ def model_pipeline():
         json.dump(metrics, f)
 
     # Save sliced data metrics
-    with open(model_dir / 'sliced_data_measures.json', 'w') as f:
-        json.dump(sliced_data_measures, f)
+    with open(model_dir / 'slice_output.txt', 'w') as f:
+        for key, value in sliced_data_measures.items():
+            f.write(f'{json.dumps({key: value})}\n')
 
     return X_test, y_test, model
 
