@@ -77,7 +77,7 @@ async def predict(data: Data):
         raise HTTPException(status_code=400, detail="hours_per_week needs to be lower than 168.")
     
     # Convert data to a DataFrame
-    data = pd.DataFrame.from_records([data.model_dump()])
+    data = pd.DataFrame.from_records([data.dict()])
     
     # Manage hypens
     data.columns = [col.replace('_', '-') for col in data.columns]
