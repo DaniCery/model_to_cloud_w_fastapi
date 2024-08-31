@@ -63,16 +63,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Move files to deployment directory
-        run: |
-          mkdir -p /opt/render/project/src/model
-          mv model/*.pkl /opt/render/project/src/model/
-          # Ensure the directory structure is as expected
-          echo "Listing files in the deployment directory:"
-          ls -l /opt/render/project/src/
-          
       - name: Trigger deployment
-        uses: sws2apps/render-deployment@main
+        #uses: sws2apps/render-deployment@main
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}  # Found in the render service url
           apiKey: ${{ secrets.RENDER_API_KEY }}  # Render Dashboard Account Settings
