@@ -1,6 +1,6 @@
 # Put the code for your API here.
 from fastapi import FastAPI, HTTPException
-
+import logging
 from pydantic import BaseModel, Field, validator
 from enum import Enum
 import pickle
@@ -10,6 +10,10 @@ import pandas as pd
 from starter.ml.data import process_data
 from starter.ml.model import inference
 from starter.train_model import cat_features
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Istantiate the FastAPI app
 app = FastAPI(
@@ -28,6 +32,23 @@ model = pickle.load(open(model_path, 'rb'))
 encoder = pickle.load(open(encoder_path, 'rb'))
 lb = pickle.load(open(lb_path, 'rb'))
 
+######### DEBUG
+# Debugging prints
+# Log current working directory and file paths
+logger.info("Current working directory: %s", os.getcwd())
+logger.info("File directory: %s", file_dir)
+logger.info("Model path: %s", model_path)
+
+# Log directory contents
+logger.info("Directory contents:")
+for root, dirs, files in os.walk(file_dir):
+    logger.info(f'In directory: {root}')
+    for file in files:
+        logger.info(f'  File: {file}')
+    for dir in dirs:
+        logger.info(f'  Dir: {dir}')
+
+######### DEBUG END
 
 class Workclass(str, Enum):
     P = "Private"
