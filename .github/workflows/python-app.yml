@@ -63,6 +63,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Check model files
+        run: |
+          echo "Listing files in model directory:"
+          ls -l model/
+        
       - name: Trigger deployment
         uses: sws2apps/render-deployment@main
         with:
