@@ -8,8 +8,8 @@ fastapi==0.63.0
 pydantic==1.10.18
 uvicorn
 gunicorn
-dvc==2.58.2
+dvc
 flake8
-pytest 
+pytest
 dvc[gdrive]
 platformdirs==3.10.0
