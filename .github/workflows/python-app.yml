@@ -63,17 +63,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Print complete directory structure
+      - name: Move files to deployment directory
         run: |
-          echo "Current working directory:"
-          pwd
-          echo "Listing contents of the root directory:"
-          ls -l /
-          echo "Listing contents of the project directory:"
-          ls -l /home/runner/work/model_to_cloud_w_fastapi/model_to_cloud_w_fastapi/
-    
-      - name: Check files in the deployment directory
-        run: |
+          mkdir -p /opt/render/project/src/model
+          mv model/*.pkl /opt/render/project/src/model/
+          # Ensure the directory structure is as expected
           echo "Listing files in the deployment directory:"
           ls -l /opt/render/project/src/
           
