@@ -54,3 +54,17 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest
+
+
+  # Deploy job on Render
+  deploy:
+    name: Deploy to Render
+    needs: [build] # builds must pass to deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger deployment
+        uses: sws2apps/render-deployment@main
+        with:
+          serviceId: ${{ secrets.RENDER_SERVICE_ID }}  # Found in the render service url
+          apiKey: ${{ secrets.RENDER_API_KEY }}  # Render Dashboard Account Settings
