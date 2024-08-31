@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Print complete directory structure
+      - name: Print complete directory structure
         run: |
           echo "Current working directory:"
           pwd
@@ -71,6 +71,11 @@ jobs:
           ls -l /
           echo "Listing contents of the project directory:"
           ls -l /home/runner/work/model_to_cloud_w_fastapi/model_to_cloud_w_fastapi/
+    
+      - name: Check files in the deployment directory
+        run: |
+          echo "Listing files in the deployment directory:"
+          ls -l /opt/render/project/src/
           
       - name: Trigger deployment
         uses: sws2apps/render-deployment@main
