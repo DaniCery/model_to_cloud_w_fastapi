@@ -63,10 +63,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Check model files
+      - name: Check model directory
         run: |
-          echo "Listing files in model directory:"
-          ls -l model/
+          echo "Checking if model directory exists:"
+          if [ -d "model" ]; then
+            echo "Model directory exists. Listing files:"
+            ls -l model/
+          else
+            echo "Model directory does not exist."
+          fi
         
       - name: Trigger deployment
         uses: sws2apps/render-deployment@main
