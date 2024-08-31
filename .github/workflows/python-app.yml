@@ -64,8 +64,8 @@ jobs:
     
     steps:
       - name: Trigger deployment
-        #uses: sws2apps/render-deployment@main
+        #uses: sws2apps/render-deployment@main  #not working
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          serviceId: ${{ secrets.RENDER_SERVICE_ID }}  # Found in the render service url
-          apiKey: ${{ secrets.RENDER_API_KEY }}  # Render Dashboard Account Settings
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}  # Found in the render service url
+          api-key: ${{ secrets.RENDER_API_KEY }}  # Render Dashboard Account Settings
